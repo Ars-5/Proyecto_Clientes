@@ -1,7 +1,66 @@
-<h1>Dashboard</h1>
-<div class="card">
-    <div class="card-head">Lorem ipsum - dashboard</div>
-    <div class="card-body">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas ducimus soluta, quasi aut ipsa non, ullam enim rem repudiandae, vitae provident animi. Inventore rerum, voluptas optio dignissimos blanditiis modi illo!
+<h2>Dashboard de clientes</h2>
+
+<div class="card" style="padding: 30px;">
+  <div class="border">
+    <button class="btn btn-md btn-outline-primary" >
+      <i class="fa fa-user"></i>Nuevo Cliente
+    </button>
+    <mdb-form-control>
+      <input mdbInput class="labelfiltro" type="text" id="form1" class="form-control" [(ngModel)]="filtro"/>
+      <label mdbLabel class="form-label" for="form1">Buscar</label>
+    </mdb-form-control>
+    <button class="btn btn-md btn-outline-primary" (click)="aplicarFiltro()">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+
+  <div class="container" style="overflow-x: auto; overflow-y: hidden;">
+      <table matSort (matSortChange)="sortData($event)" class="table align-middle mb-0 bg-white">
+        <thead class="bg-light" >
+        <tr>
+          <th mat-sort-header="id">ID</th>
+          <th mat-sort-header="mes_venta">Mes de venta</th>
+          <th mat-sort-header="empresa">Empresa</th>
+          <th mat-sort-header="ejecutivo">Ejecutivo</th>
+          <th mat-sort-header="fac_bol">FAC/BOL</th>
+          <th mat-sort-header="ruc_dni">RUC/DNI</th>
+          <th mat-sort-header="r_social">Razon social</th>
+          <th mat-sort-header="cliente">Cliente</th>
+          <th mat-sort-header="email">Correo</th>
+          <th mat-sort-header="telefono">Telefono</th>
+          <th mat-sort-header="direccion">direccion</th>
+          <th mat-sort-header="department">Departamento</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody >
+
+        <tr *ngFor="let Cliente of sortedData">
+          <td><span>{{Cliente.id}}</span></td>
+          <td><span>{{Cliente.mes_venta}}</span></td>
+          <td><span>{{Cliente.empresa}}</span></td>
+          <td><span>{{Cliente.ejecutivo}}</span></td>
+          <td><span>{{Cliente.fac_bol}}</span></td>
+          <td><span>{{Cliente.ruc_dni}}</span></td>
+          <td><span>{{Cliente.r_social}}</span></td>
+          <td><span>{{Cliente.cliente}}</span></td>
+          <td><span>{{Cliente.email}}</span></td>
+          <td><span>{{Cliente.telefono}}</span></td>
+          <td><span>{{Cliente.direccion}}</span></td>
+          <td><span>{{Cliente.department}}</span></td>
+          <td style="width: 150px;">
+              <a class="pointer" style="color:#36385a">
+                <i class="fa fa-search"></i></a>
+              <a class="pointer" style="color:#666bb6">
+                <i class="fa fa-edit"></i></a>
+              <a class="pointer" style="color:#e15639">
+                <i class="fa fa-trash"></i></a>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
     </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
 </div>

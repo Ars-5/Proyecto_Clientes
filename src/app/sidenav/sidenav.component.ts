@@ -17,10 +17,10 @@ interface SideNavToggle {
     fadeInOut,
     trigger('rotate', [
       transition(':enter', [
-        animate('1000ms', 
+        animate('1000ms',
           keyframes([
-            style({transform: 'rotate(0deg)', offset: '0'}),
-            style({transform: 'rotate(2turn)', offset: '1'})
+            // style({transform: 'rotate(0deg)', offset: '0'}),
+            // style({transform: 'rotate(0turn)', offset: '1'})
           ])
         )
       ])

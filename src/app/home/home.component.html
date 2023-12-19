@@ -1,0 +1,19 @@
+<h4>Seleccione los filtros:</h4>
+
+<div class="card" style="padding: 30px;">
+  <label for="departamentoInput">Departamento:</label>
+  <form>
+    <mat-radio-group [(ngModel)]="departamentoFiltrado" name="departamento">
+      <mat-radio-button *ngFor="let depto of departamentos" [value]="depto" (click)="aplicarFiltro(depto)">
+        {{ depto }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </form>
+</div>
+<mat-divider></mat-divider>
+
+
+<!-- Mostrar la lista de clientes según el departamento seleccionado -->
+<div *ngFor="let cliente of clientes">
+  {{ cliente | json }}
+</div>

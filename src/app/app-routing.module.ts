@@ -4,17 +4,14 @@ import { CoupensComponent } from './coupens/coupens.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MediaComponent } from './media/media.component';
 import { PagesComponent } from './pages/pages.component';
-import { ProductsComponent } from './products/products.component';
 import { SettingsComponent } from './settings/settings.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
-  {
-    path: 'products',
-    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
-  },
+  {path: 'home', component: HomeComponent},
   {path: 'statistics', component: StatisticsComponent},
   {
     path: 'coupens',
