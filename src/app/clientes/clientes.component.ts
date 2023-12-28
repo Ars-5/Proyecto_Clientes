@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
+import {ClientsService} from '../services/clients.service';
 import { MatInputModule } from '@angular/material/input';
 import {MatStepperModule} from '@angular/material/stepper';
 import {ViewEncapsulation} from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
@@ -13,6 +15,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   FormBuilder,
+  FormGroup,
 } from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -81,38 +84,74 @@ export const MY_FORMATS_WITH_DAY = {
   ],
 })
 export class ClientesComponent {
+  formulario!: FormGroup;
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
-
-
-
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   matcher = new MyErrorStateMatcher();
   date = new FormControl(moment());
   dateWithDay = new FormControl(moment());
+  dateForInstallation = new FormControl(moment());
+  //GENERICO
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder, private clientService: ClientsService) {
+    this.formulario = this._formBuilder.group({
+      mes_venta: [null],
+      empresa: [null],
+      fuv: [null],
+      mes_venta2: [null],
+      ejecutivo: [null],
+      fac_bol:  [null],
+      ruc_dni:  [null],
+      r_social: [null],
+      cliente:  [null],
+      email:  [null, [Validators.required, Validators.email]],
+      telefono:  [null],
+      direccion: [null],
+      department: [null],
+      equipo: [null],
+      dongle: [null],
+      tipo_venta: [null],
+      precio_venta: [null],
+      separacion: [null],
+      cuota_inicial: [null],
+      fecha_ci: [null],
+      eq_part_pago: [null],
+      monto_finan: [null],
+      fecha_insta: [null],
+    });
+  }
+
+  async registrarEnFirestore() {
+    console.log('Valores del formulario:', this.formulario.value);
+    try {
+      const response = await this.clientService.addClient(this.formulario.value);
+      console.log('Respuesta de Firestore:', response);
+    } catch (error) {
+      console.error('Error al registrar en Firestore:', error);
+    }
+  }
+
+
+
+
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = this.date.value ?? moment();
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
-
     const ctrlValueWithDay = this.dateWithDay.value ?? moment();
     ctrlValueWithDay.day(normalizedMonthAndYear.day());
     ctrlValueWithDay.month(normalizedMonthAndYear.month());
     ctrlValueWithDay.year(normalizedMonthAndYear.year());
     this.dateWithDay.setValue(ctrlValueWithDay);
-
     datepicker.close();
   }
-
-
 
 
 

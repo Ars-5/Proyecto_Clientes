@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../environment/environment';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -70,7 +74,7 @@ import { ClientesComponent } from './clientes/clientes.component';
     LoginComponent,
     NewclientComponent,
     HomeComponent,
-    ClientesComponent
+    ClientesComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,9 +116,9 @@ import { ClientesComponent } from './clientes/clientes.component';
     MatGridListModule,
     MatCardModule,
     MatInputModule,
-    MatStepperModule
-
-
+    MatStepperModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
