@@ -1,19 +1,195 @@
 <h4>Seleccione los filtros:</h4>
 
-<div class="card" style="padding: 30px;">
-  <label for="departamentoInput">Departamento:</label>
-  <form>
-    <mat-radio-group [(ngModel)]="departamentoFiltrado" name="departamento">
-      <mat-radio-button *ngFor="let depto of departamentos" [value]="depto" (click)="aplicarFiltro(depto)">
-        {{ depto }}
-      </mat-radio-button>
-    </mat-radio-group>
-  </form>
-</div>
+
+<mat-expansion-panel hideToggle class="card" style="margin-bottom: 30px;">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Filtros
+    </mat-panel-title>
+    <mat-panel-description>
+      Selecciones los filtros para la tabla
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-divider></mat-divider>
+
+  <label for="departamentoInput" style="margin-top: 30px; margin-bottom: 30px;" >Filtrar por departamento:</label>
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <mat-form-field class="custom-select-container">
+      <mat-label>Seleccionar departamento</mat-label>
+      <mat-select class="select" [(ngModel)]="departamentoFiltrado" name="departamento" (selectionChange)="aplicarFiltro($event.value)" [disabled]="disableSelect">
+        <mat-option *ngFor="let depto of departamentos" [value]="depto">
+          {{ depto }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div style="margin-left: 15px;">
+      <button mat-stroked-button (click)="limpiarFiltroDepartamentos()" [disabled]="disableSelect">Todos</button>
+    </div>
+  </div>
+
+
+  <p>
+    <mat-checkbox [(ngModel)]="disableSelect" (change)="toggleSelect()">Mostrar sin filtro</mat-checkbox>
+  </p>
+</mat-expansion-panel>
+
+
 <mat-divider></mat-divider>
 
 
-<!-- Mostrar la lista de clientes según el departamento seleccionado -->
-<div *ngFor="let cliente of clientes">
-  {{ cliente | json }}
+<div class="mat-elevation-z8" >
+
+  <div style="width: 300px; padding: 30px;">
+    <mdb-form-control>
+      <input mdbInput class="labelfiltro" type="text" id="form1" class="form-control" [(ngModel)]="filtro" (keyup.enter)="aplicarFiltroSearch()" />
+      <label mdbLabel class="form-label" for="form1">Buscar</label>
+    </mdb-form-control>
+  </div>
+
+  <div style="width: 300px; padding: 30px;">
+      <button class="fa fa-plus" mat-mini-fab matTooltip="Agregar usuario" color="primary" aria-label="Example mini fab with a heart icon" routerLink="/adclient">
+        <mat-icon>person_add</mat-icon>
+      </button>
+  </div>
+
+
+<div style="overflow-x: auto; overflow-y: hidden;">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" >
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="id"> Id </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mes_venta">
+      <th mat-header-cell *matHeaderCellDef> Mes de venta </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.mes_venta}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fuv">
+      <th mat-header-cell *matHeaderCellDef> Fecha recepción FUV </th>
+      <td mat-cell *matCellDef="let cliente"> SF </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mes_venta2">
+      <th mat-header-cell *matHeaderCellDef> Mes de venta </th>
+      <td mat-cell *matCellDef="let cliente"> EG01-### </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ejecutivo">
+      <th mat-header-cell *matHeaderCellDef> Ejecutivo </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.ejecutivo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fac_bol">
+      <th mat-header-cell *matHeaderCellDef> FAC/BOL </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.fac_bol}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ruc_dni">
+      <th mat-header-cell *matHeaderCellDef> RUC/DNI </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.empresa}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="r_social">
+      <th mat-header-cell *matHeaderCellDef> Razon social </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.r_social}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef> Clente </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.cliente}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Correo </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef> Telefono </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.telefono}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="direccion">
+      <th mat-header-cell *matHeaderCellDef> Dirección </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.direccion}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef> Departamento </th>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.department }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="equipo">
+      <th mat-header-cell *matHeaderCellDef> Equipo </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dongle">
+      <th mat-header-cell *matHeaderCellDef> Dongle </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tipo_venta">
+      <th mat-header-cell *matHeaderCellDef> Tipo de venta </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="precio_venta">
+      <th mat-header-cell *matHeaderCellDef> Precio de venta </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="separacion">
+      <th mat-header-cell *matHeaderCellDef> Separación </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cuota_inicial">
+      <th mat-header-cell *matHeaderCellDef> Cuota inicial </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_ci">
+      <th mat-header-cell *matHeaderCellDef> Fecha de pago de cuota inicial </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="eq_part_pago">
+      <th mat-header-cell *matHeaderCellDef> Equipo parte de pago </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="monto_finan">
+      <th mat-header-cell *matHeaderCellDef> Monto a financiar </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_insta">
+      <th mat-header-cell *matHeaderCellDef> Fecha de instalación </th>
+      <td mat-cell *matCellDef="let cliente"> - </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let cliente">
+        <a class="pointer" style="color:#36385a; padding-right: 6px;" matTooltip="Detalles de usuario">
+          <i class="fa fa-search"></i></a>
+        <a class="pointer" style="color:#666bb6; padding-right: 6px;" matTooltip="Editar usuario">
+          <i class="fa fa-edit"></i></a>
+        <a class="pointer" (click)="eliminarUsuario(cliente.id)" style="color:#e15639" matTooltip="Eliminar usuario">
+          <i class="fa fa-trash"></i></a></td>
+    </ng-container>
+
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let cliente; columns: displayedColumns;"></tr>
+  </table>
+</div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+  </mat-paginator>
 </div>
