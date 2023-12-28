@@ -39,20 +39,19 @@
 
 
 <div class="mat-elevation-z8" >
-
-  <div style="width: 300px; padding: 30px;">
-    <mdb-form-control>
-      <input mdbInput class="labelfiltro" type="text" id="form1" class="form-control" [(ngModel)]="filtro" (keyup.enter)="aplicarFiltroSearch()" />
-      <label mdbLabel class="form-label" for="form1">Buscar</label>
-    </mdb-form-control>
-  </div>
-
-  <div style="width: 300px; padding: 30px;">
+  <div>
+    <div class="rigth" >
       <button class="fa fa-plus" mat-mini-fab matTooltip="Agregar usuario" color="primary" aria-label="Example mini fab with a heart icon" routerLink="/adclient">
         <mat-icon>person_add</mat-icon>
       </button>
   </div>
-
+    <div class="left" >
+      <mdb-form-control>
+        <input mdbInput class="labelfiltro" type="text" id="form1" class="form-control" [(ngModel)]="filtro" (keyup.enter)="aplicarFiltroSearch()" />
+        <label mdbLabel class="form-label" for="form1">Buscar</label>
+      </mdb-form-control>
+    </div>
+  </div>
 
 <div style="overflow-x: auto; overflow-y: hidden;">
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" >

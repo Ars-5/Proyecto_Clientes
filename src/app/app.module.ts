@@ -32,6 +32,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import {MatStepperModule} from '@angular/material/stepper';
+
 
 
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -105,7 +109,10 @@ import { ClientesComponent } from './clientes/clientes.component';
     MatExpansionModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCardModule,
+    MatInputModule,
+    MatStepperModule
 
 
   ],

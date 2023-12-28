@@ -1,0 +1,14 @@
+.rigth {
+  padding: 15px;
+  position: absolute;
+  width: 150px;
+  height: 70px;
+  right: 5px;    // 5px relative to the most-right of parent
+}
+
+.left {
+  padding: 15px;
+  height: 70px;
+  width: 300px;
+  position: static;   // Declarado como estatico
+}
