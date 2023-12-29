@@ -1,9 +1,9 @@
-import { Component, ChangeDetectorRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Sort, MatSort } from '@angular/material/sort';
-
-import { CLIENTES, Cliente } from '../dashboard/dash-data';
+import { ClientsService } from '../services/clients.service';
+import Client from 'src/interfaces/clients.interface';
 
 
 
@@ -12,31 +12,38 @@ import { CLIENTES, Cliente } from '../dashboard/dash-data';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements AfterViewInit {
-
+export class HomeComponent implements AfterViewInit, OnInit  {
+  clientesvf!: Client[];
   disableSelect = false;
   departamentoFiltrado: string = '';
   departamentos: string[] = this.obtenerDepartamentos();
-  clientes: Cliente[] = CLIENTES;
   panelOpenState = false;
   filtro: string = '';
-  sortedData: Cliente[];
-  originalData: Cliente[];
+  sortedData: Client[] = [];
+  originalData: Client[] = [];
   i!: number;
   displayedColumns: string[] = ['id', 'mes_venta', 'fuv', 'mes_venta2', 'ejecutivo', 'fac_bol', 'ruc_dni', 'r_social', 'cliente',
-  'email', 'telefono', 'direccion', 'department', 'equipo', 'dongle',
-  'tipo_venta', 'precio_venta', 'separacion', 'cuota_inicial', 'fecha_ci', 'eq_part_pago', 'monto_finan', 'fecha_insta', 'acciones'];
-  dataSource = new MatTableDataSource<Cliente>(CLIENTES);
+  'email', 'telefono', 'direccion', 'department', 'equipo', 'dongle', 'tipo_venta', 'precio_venta', 'separacion', 'cuota_inicial', 'fecha_ci', 'eq_part_pago', 'monto_finan', 'fecha_insta', 'acciones'];
+  dataSource = new MatTableDataSource<Client>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
-  constructor(private cdr: ChangeDetectorRef) {
-    this.sortedData = this.clientes.slice();
-    this.originalData = this.clientes.slice();
-    this.dataSource = new MatTableDataSource<Cliente>(this.originalData);
+  constructor(private cdr: ChangeDetectorRef, private clientService: ClientsService) {
+    this.sortedData = [];
+    this.originalData = [];
+    this.dataSource = new MatTableDataSource<Client>(this.originalData);
   }
+
+  ngOnInit(): void {
+    this.clientService.getClients().subscribe(clientesvf => {
+      this.originalData = clientesvf;
+      this.dataSource.data = this.originalData.slice();
+      this.departamentos = this.obtenerDepartamentos();
+    });
+  }
+
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -90,13 +97,15 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-
-
-
-  // Obtener una lista única de departamentos
-  private obtenerDepartamentos(): string[] {
-    return [...new Set(CLIENTES.map(cliente => cliente.department))];
+// Obtener una lista única de departamentos
+private obtenerDepartamentos(): string[] {
+  if (this.originalData) {
+    return [...new Set(this.originalData.map(cliente => cliente.department))];
+  } else {
+    // Puedes manejar el caso en que los datos aún no se hayan cargado
+    return [];
   }
+}
 
   // Filtrar la lista de clientes según el departamento seleccionado
   private filtrarClientesPorDepartamento() {
@@ -109,24 +118,6 @@ export class HomeComponent implements AfterViewInit {
     }
     //console.log("Datos después de filtrar por departamento:", this.dataSource.data);
     this.cdr.detectChanges();
-  }
-
-
-  sortData(sort: Sort) {
-    const data = this.dataSource.data.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
-      return;
-    }
-    this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'id':
-          return compare(a.id, b.id, isAsc);
-        default:
-          return 0;
-      }
-    });
   }
 
   aplicarFiltroSearch() {
@@ -153,22 +144,19 @@ export class HomeComponent implements AfterViewInit {
   }
 
 
-  eliminarUsuario(id: number) {
-    // Encuentra el índice del cliente con el id proporcionado
-    const index = this.dataSource.data.findIndex(cliente => cliente.id === id);
+  // eliminarUsuario(id: number) {
+  //   // Encuentra el índice del cliente con el id proporcionado
+  //   const index = this.dataSource.data.findIndex(cliente => cliente.id === id);
 
-    // Asegúrate de que el cliente exista antes de intentar eliminarlo
-    if (index !== -1) {
-      // Elimina el cliente del array de datos
-      this.dataSource.data.splice(index, 1);
+  //   // Asegúrate de que el cliente exista antes de intentar eliminarlo
+  //   if (index !== -1) {
+  //     // Elimina el cliente del array de datos
+  //     this.dataSource.data.splice(index, 1);
 
-      // Actualiza la tabla después de realizar cambios
-      this.dataSource._updateChangeSubscription();
-    }
-  }
-
-
-
+  //     // Actualiza la tabla después de realizar cambios
+  //     this.dataSource._updateChangeSubscription();
+  //   }
+  // }
 }
 
 

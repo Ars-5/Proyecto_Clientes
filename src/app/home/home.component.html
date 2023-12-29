@@ -54,7 +54,7 @@
   </div>
 
 <div style="overflow-x: auto; overflow-y: hidden;">
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" >
+  <table mat-table [dataSource]="dataSource" matSort >
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="id"> Id </th>
@@ -178,7 +178,7 @@
           <i class="fa fa-search"></i></a>
         <a class="pointer" style="color:#666bb6; padding-right: 6px;" matTooltip="Editar usuario">
           <i class="fa fa-edit"></i></a>
-        <a class="pointer" (click)="eliminarUsuario(cliente.id)" style="color:#e15639" matTooltip="Eliminar usuario">
+        <a class="pointer" style="color:#e15639" matTooltip="Eliminar usuario">
           <i class="fa fa-trash"></i></a></td>
     </ng-container>
 
@@ -186,6 +186,7 @@
     <tr mat-row *matRowDef="let cliente; columns: displayedColumns;"></tr>
   </table>
 </div>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
   </mat-paginator>
 </div>
+
