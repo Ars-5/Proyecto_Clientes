@@ -122,26 +122,24 @@ private obtenerDepartamentos(): string[] {
 
   aplicarFiltroSearch() {
     const filtroLowerCase = this.filtro.toLowerCase();
-
     this.dataSource.data = this.originalData.filter(sortedData =>
-      sortedData.mes_venta.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.empresa.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.ejecutivo.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.fac_bol.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.ruc_dni.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.r_social.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.cliente.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.email.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.telefono.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.direccion.toLowerCase().includes(filtroLowerCase) ||
-      sortedData.department.toLowerCase().includes(filtroLowerCase)
+      (sortedData.mes_venta && sortedData.mes_venta.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.empresa && sortedData.empresa.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.ejecutivo && sortedData.ejecutivo.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.fac_bol && sortedData.fac_bol.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.ruc_dni && sortedData.ruc_dni.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.r_social && sortedData.r_social.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.cliente && sortedData.cliente.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.email && sortedData.email.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.telefono && sortedData.telefono.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.direccion && sortedData.direccion.toLowerCase().includes(filtroLowerCase)) ||
+      (sortedData.department && sortedData.department.toLowerCase().includes(filtroLowerCase))
     );
-
-    // Aplicar el filtro de departamento si no está deshabilitado
     if (!this.disableSelect && this.departamentoFiltrado) {
       this.dataSource.data = this.dataSource.data.filter(cliente => cliente.department === this.departamentoFiltrado);
     }
   }
+
 
 
   // eliminarUsuario(id: number) {
