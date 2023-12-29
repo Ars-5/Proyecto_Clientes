@@ -19,13 +19,46 @@ export class ClientsService {
   }
 
   getClients() {
-    return this.clientsCollection.valueChanges(); 
+    return this.clientsCollection.valueChanges();
   }
 
   deleteClient(client: Client): Promise<void> {
     const clientDocRef = this.clientsCollection.doc(client.id).ref;
     return clientDocRef.delete();
   }
+
+  updateClient(client: Client, id: string): Promise<void> {
+    const clientDocRef = this.clientsCollection.doc(id).ref;
+    // Crear un objeto con las propiedades que se van a actualizar
+    const updatedClient: Partial<Client> = {
+      mes_venta: client.mes_venta,
+      empresa: client.empresa,
+      fuv: client.fuv,
+      mes_venta2: client.mes_venta2,
+      ejecutivo: client.ejecutivo,
+      fac_bol:  client.fac_bol,
+      ruc_dni:  client.ruc_dni,
+      r_social:  client.r_social,
+      cliente:  client.cliente,
+      email:  client.email,
+      telefono:  client.telefono,
+      direccion: client.direccion,
+      department: client.department,
+      equipo: client.equipo,
+      dongle: client.dongle,
+      tipo_venta: client.tipo_venta,
+      precio_venta: client.precio_venta,
+      separacion: client.separacion,
+      cuota_inicial: client.cuota_inicial,
+      fecha_ci: client.fecha_ci,
+      eq_part_pago: client.eq_part_pago,
+      monto_finan: client.monto_finan,
+      fecha_insta: client.fecha_insta,
+    };
+    // Actualizar el documento en Firestore
+    return clientDocRef.update(updatedClient);
+  }
+
 
 
 }

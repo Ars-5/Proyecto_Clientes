@@ -1,24 +1,10 @@
 import {Component} from '@angular/core';
 import {ClientsService} from '../services/clients.service';
-import { MatInputModule } from '@angular/material/input';
-import {MatStepperModule} from '@angular/material/stepper';
-import {ViewEncapsulation} from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MatDatepicker, MatDatepickerModule} from '@angular/material/datepicker';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  FormsModule,
-  ReactiveFormsModule,
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
+import {MatDatepicker} from '@angular/material/datepicker';
+import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
@@ -96,7 +82,6 @@ export class ClientesComponent {
   date = new FormControl(moment());
   dateWithDay = new FormControl(moment());
   dateForInstallation = new FormControl(moment());
-  //GENERICO
 
   constructor(private _formBuilder: FormBuilder, private clientService: ClientsService) {
     this.formulario = this._formBuilder.group({
@@ -136,21 +121,16 @@ export class ClientesComponent {
     }
   }
 
-
-
-
-
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
-    const ctrlValue = this.date.value ?? moment();
+    const ctrlValue = (this.date.value || moment()).clone();
     ctrlValue.month(normalizedMonthAndYear.month());
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
-    const ctrlValueWithDay = this.dateWithDay.value ?? moment();
+    const ctrlValueWithDay = (this.dateWithDay.value || moment()).clone();
     ctrlValueWithDay.day(normalizedMonthAndYear.day());
     ctrlValueWithDay.month(normalizedMonthAndYear.month());
     ctrlValueWithDay.year(normalizedMonthAndYear.year());
     this.dateWithDay.setValue(ctrlValueWithDay);
-    datepicker.close();
   }
 
 

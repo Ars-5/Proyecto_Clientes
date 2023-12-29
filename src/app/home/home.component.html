@@ -64,12 +64,12 @@
 
     <ng-container matColumnDef="fuv">
       <th mat-header-cell *matHeaderCellDef> Fecha recepción FUV </th>
-      <td mat-cell *matCellDef="let cliente"> SF </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.fuv}} </td>
     </ng-container>
 
     <ng-container matColumnDef="mes_venta2">
       <th mat-header-cell *matHeaderCellDef> Mes de venta </th>
-      <td mat-cell *matCellDef="let cliente"> EG01-### </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.mes_venta2}} </td>
     </ng-container>
 
     <ng-container matColumnDef="ejecutivo">
@@ -119,12 +119,12 @@
 
     <ng-container matColumnDef="equipo">
       <th mat-header-cell *matHeaderCellDef> Equipo </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.equipo}} </td>
     </ng-container>
 
     <ng-container matColumnDef="dongle">
       <th mat-header-cell *matHeaderCellDef> Dongle </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.dongle}} </td>
     </ng-container>
 
     <ng-container matColumnDef="tipo_venta">

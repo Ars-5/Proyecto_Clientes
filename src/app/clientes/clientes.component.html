@@ -27,7 +27,7 @@
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
               <mat-form-field class="ancho">
-                <mat-label>Fecha de recepción del FUV</mat-label>
+                <mat-label>Recepción FUV</mat-label>
                 <input matInput formControlName="fuv">
               </mat-form-field>
 
@@ -190,7 +190,7 @@
 
     <mat-step>
       <ng-template matStepLabel>Listo</ng-template>
-      <p>You are now done.</p>
+      <p>Todo listo para registrar el usuario.</p>
       <div>
         <button mat-button (click)="registrarEnFirestore()">Registrar</button>
         <button mat-button (click)="stepper.reset()">Reiniciar</button>
