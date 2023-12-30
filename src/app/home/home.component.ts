@@ -38,29 +38,32 @@ export class HomeComponent implements AfterViewInit, OnInit  {
 
 
   ngOnInit(): void {
-    this.clientService.getClients().subscribe(clientesvf => {
-      // Mapea los datos para incluir el ID en cada cliente
-      this.originalData = clientesvf.map(cliente => {
-        const id = cliente.id; // asumiendo que 'id' es la propiedad correcta que contiene el ID
-        const data = cliente as unknown as Client; // asumiendo que los datos están directamente en el objeto
+    this.clientService.getClients()
+      .subscribe((clientesvf: Client[]) => {
+        if (clientesvf) {
+          // Mapea los datos para incluir el ID en cada cliente
+          this.originalData = clientesvf.map((cliente) => {
+            const id = cliente.id; // asumiendo que 'id' es la propiedad correcta que contiene el ID
+            const data = cliente as unknown as Client; // asumiendo que los datos están directamente en el objeto
 
-        return {
-          id: id,
-          ...data
-        };
+            return {
+              ...data
+            };
+          });
+
+          // Actualiza la data del MatTableDataSource con la nueva data que incluye los IDs
+          this.dataSource.data = this.originalData.slice();
+
+          // Actualiza la lista de departamentos
+          this.departamentos = this.obtenerDepartamentos();
+        } else {
+          console.error('Error: clientesvf es undefined');
+        }
+      },
+      (error) => {
+        console.error('Error getting clients: ', error);
       });
-
-      // Actualiza la data del MatTableDataSource con la nueva data que incluye los IDs
-      this.dataSource.data = this.originalData.slice();
-
-      // Actualiza la lista de departamentos
-      this.departamentos = this.obtenerDepartamentos();
-    });
   }
-
-
-
-
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -76,19 +79,15 @@ export class HomeComponent implements AfterViewInit, OnInit  {
     if (this.disableSelect) {
       this.dataSource.data = this.originalData.slice();
     } else {
-      // Restaurar la data original solo si el filtro de departamento está activo
       if (this.departamentoFiltrado) {
         this.dataSource.data = this.originalData.filter(cliente => cliente.department === this.departamentoFiltrado);
       } else {
         this.dataSource.data = this.originalData.slice();
       }
     }
-
-    // Si hay un valor en this.filtro, aplicar el filtro de búsqueda
     if (this.filtro) {
       this.aplicarFiltroSearch();
     } else {
-      // Si no hay valor en this.filtro, aplicar el filtro de departamento si está activo
       if (this.departamentoFiltrado && !this.disableSelect) {
         this.dataSource.data = this.dataSource.data.filter(cliente => cliente.department === this.departamentoFiltrado);
       }
@@ -96,21 +95,15 @@ export class HomeComponent implements AfterViewInit, OnInit  {
   }
 
   limpiarFiltroDepartamentos() {
-    // Limpiar el filtro de departamentos y restaurar la data original
     this.departamentoFiltrado = '';
-
-  // Restaurar la data original solo si el filtro de departamento no está deshabilitado
   if (!this.disableSelect) {
     this.dataSource.data = this.originalData.slice();
   }
-
-    // Si hay un valor en this.filtro, aplicar el filtro de búsqueda
     if (this.filtro) {
       this.aplicarFiltroSearch();
     } else {
-      // Si no hay valor en this.filtro, actualizar la tabla con la data original
       this.dataSource.data = this.originalData.slice();
-      this.cdr.detectChanges(); // Asegúrate de detectar los cambios después de actualizar la data
+      this.cdr.detectChanges();
     }
   }
 
@@ -119,7 +112,6 @@ private obtenerDepartamentos(): string[] {
   if (this.originalData) {
     return [...new Set(this.originalData.map(cliente => cliente.department))];
   } else {
-    // Puedes manejar el caso en que los datos aún no se hayan cargado
     return [];
   }
 }
@@ -158,13 +150,39 @@ private obtenerDepartamentos(): string[] {
   }
 
 
+  mostrarDetalles(clienteId: string) {
+    // Obtener detalles del cliente por ID
+    this.clientService.getClientById(clienteId)
+      .then((cliente) => {
+        if (cliente !== null) {
+          console.log('Detalles del cliente:', cliente);
+        } else {
+          console.log('Cliente no encontrado');
+        }
+      })
+      .catch((error) => {
+        console.error('Error al obtener detalles del cliente:', error);
+      });
+
+    // Obtener todos los IDs de los documentos
+    this.clientService.getAllClientIds().then(ids => {
+      console.log('Document IDs:', ids);
+
+      // Puedes iterar sobre los IDs si es necesario
+      for (const id of ids) {
+        // Hacer algo con cada ID, si es necesario
+        console.log('Document ID:', id);
+      }
+    });
+  }
+
 
 
   eliminarCliente(cliente: Client) {
     console.log('Cliente a eliminar:', cliente);
     const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar este cliente?');
     if (confirmacion) {
-      this.clientService.deleteClientv2(cliente)
+      this.clientService.deleteClient(cliente)
         .then(() => {
           console.log('Cliente eliminado con éxito.');
           this.clientService.getClients().subscribe(clientesvf => {
@@ -177,10 +195,6 @@ private obtenerDepartamentos(): string[] {
     }
     console.log(this.clientesvf)
   }
-
-
-
-
 }
 
 
