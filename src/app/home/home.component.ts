@@ -35,13 +35,30 @@ export class HomeComponent implements AfterViewInit, OnInit  {
     this.dataSource = new MatTableDataSource<Client>(this.originalData);
   }
 
+
+
   ngOnInit(): void {
     this.clientService.getClients().subscribe(clientesvf => {
-      this.originalData = clientesvf;
+      // Mapea los datos para incluir el ID en cada cliente
+      this.originalData = clientesvf.map(cliente => {
+        const id = cliente.id; // asumiendo que 'id' es la propiedad correcta que contiene el ID
+        const data = cliente as unknown as Client; // asumiendo que los datos están directamente en el objeto
+
+        return {
+          id: id,
+          ...data
+        };
+      });
+
+      // Actualiza la data del MatTableDataSource con la nueva data que incluye los IDs
       this.dataSource.data = this.originalData.slice();
+
+      // Actualiza la lista de departamentos
       this.departamentos = this.obtenerDepartamentos();
     });
   }
+
+
 
 
 
@@ -142,19 +159,28 @@ private obtenerDepartamentos(): string[] {
 
 
 
-  // eliminarUsuario(id: number) {
-  //   // Encuentra el índice del cliente con el id proporcionado
-  //   const index = this.dataSource.data.findIndex(cliente => cliente.id === id);
 
-  //   // Asegúrate de que el cliente exista antes de intentar eliminarlo
-  //   if (index !== -1) {
-  //     // Elimina el cliente del array de datos
-  //     this.dataSource.data.splice(index, 1);
+  eliminarCliente(cliente: Client) {
+    console.log('Cliente a eliminar:', cliente);
+    const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar este cliente?');
+    if (confirmacion) {
+      this.clientService.deleteClientv2(cliente)
+        .then(() => {
+          console.log('Cliente eliminado con éxito.');
+          this.clientService.getClients().subscribe(clientesvf => {
+            this.originalData = clientesvf;
+          });
+        })
+        .catch(error => {
+          console.error('Error al eliminar cliente:', error);
+        });
+    }
+    console.log(this.clientesvf)
+  }
 
-  //     // Actualiza la tabla después de realizar cambios
-  //     this.dataSource._updateChangeSubscription();
-  //   }
-  // }
+
+
+
 }
 
 

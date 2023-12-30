@@ -23,4 +23,5 @@ export default interface Client {
   eq_part_pago: string;
   monto_finan: string;
   fecha_insta: string;
+  tipo_moneda: string;
 }

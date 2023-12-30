@@ -8,12 +8,12 @@
             <mat-grid-tile [colspan]="4" [rowspan]="1" >
               <h4>Agregar nuevo usuario</h4>
             </mat-grid-tile>
-            <mat-grid-tile [colspan]="1" [rowspan]="1" >
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field class="ancho">
                 <mat-label>Mes de venta</mat-label>
-                <input matInput [matDatepicker]="dp" formControlName="mes_venta">
-                <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-                <mat-datepicker #dp startView="multi-year" (monthSelected)="setMonthAndYear($event, dp)" panelClass="example-month-picker"></mat-datepicker>
+                <mat-select formControlName="mes_venta">
+                  <mat-option *ngFor="let mes of meses" [value]="mes.valor">{{ mes.nombre }}</mat-option>
+                </mat-select>
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
@@ -109,12 +109,20 @@
           <button mat-button matStepperNext>Siguiente</button>
         </div>
     </mat-step>
-
     <mat-step>
         <ng-template matStepLabel>Registro de equipo</ng-template>
         <form [formGroup]="formulario">
           <mat-grid-list cols="3" rowHeight="70px">
-            <mat-grid-tile [colspan]="3" [rowspan]="1" >
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+              <mat-form-field>
+                <mat-label style="width: 20px;">Moneda</mat-label>
+                <mat-select formControlName="tipo_moneda">
+                  <mat-option value="USD">USD</mat-option>
+                  <mat-option value="PEN">PEN</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1" >
               <h4>Agregar equipo de usuario</h4>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
@@ -133,53 +141,62 @@
               <mat-form-field class="ancho">
                 <mat-label>Tipo de venta</mat-label>
                 <mat-select formControlName="tipo_venta">
-                  <mat-option value="Credito">Credito</mat-option>
-                  <mat-option value="Debito">Debito</mat-option>
+                  <mat-option value="CREDITO">Credito</mat-option>
+                  <mat-option value="DEBITO">Debito</mat-option>
+                  <mat-option value="CONTADO">Contado</mat-option>
                 </mat-select>
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
               <mat-form-field class="ancho">
                 <mat-label>Precio de venta</mat-label>
-                <input matInput formControlName="precio_venta">
+                <input type="number" matInput formControlName="precio_venta">
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
               <mat-form-field class="ancho">
                 <mat-label>Separación</mat-label>
-                <input matInput formControlName="separacion">
+                <input type="number" matInput formControlName="separacion">
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
               <mat-form-field class="ancho">
                 <mat-label>Cuota inicial</mat-label>
-                <input matInput formControlName="cuota_inicial">
+                <input type="number" matInput formControlName="cuota_inicial">
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
               <mat-form-field class="ancho">
                 <mat-label>Fecha cuota inicial</mat-label>
-                <input matInput formControlName="fecha_ci">
+                <input matInput [matDatepicker]="picker" formControlName="fecha_ci">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field class="ancho">
                 <mat-label>Equipo parte pago</mat-label>
-                <input matInput formControlName="eq_part_pago">
+                <mat-select formControlName="eq_part_pago">
+                  <mat-option value="SI">SI</mat-option>
+                  <mat-option value="NO">NO</mat-option>
+                </mat-select>
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1" >
               <mat-form-field class="ancho">
                 <mat-label>Monto a financiar</mat-label>
-                <input matInput formControlName="monto_finan">
+                <input type="number" matInput formControlName="monto_finan">
               </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1" [rowspan]="1">
               <mat-form-field class="ancho">
                 <mat-label>Fecha de instalación</mat-label>
-                <input matInput formControlName="fecha_insta">
+                <input matInput [matDatepicker]="dp" formControlName="fecha_insta">
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp></mat-datepicker>
               </mat-form-field>
             </mat-grid-tile>
+
           </mat-grid-list>
         </form>
         <div>

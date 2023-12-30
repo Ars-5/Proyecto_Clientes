@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentData, DocumentReference } from '@angular/fire/compat/firestore';
 import Client from 'src/interfaces/clients.interface';
 import 'rxjs/operators';
-
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,9 +23,22 @@ export class ClientsService {
   }
 
   deleteClient(client: Client): Promise<void> {
-    const clientDocRef = this.clientsCollection.doc(client.id).ref;
+    const clientId = client.id;
+    if (!clientId) {
+      console.error('El cliente no tiene un ID.');
+      return Promise.reject('El cliente no tiene un ID.');
+    }
+
+    const clientDocRef = this.afs.doc(`clients/${clientId}`);
     return clientDocRef.delete();
   }
+
+  deleteClientv2(client: Client) {
+    return this.afs.collection("clients")
+    .doc(client.id)
+    .delete();
+  }
+
 
   updateClient(client: Client, id: string): Promise<void> {
     const clientDocRef = this.clientsCollection.doc(id).ref;

@@ -54,7 +54,7 @@
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="id"> Id </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.id}} </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.Id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="mes_venta">
@@ -129,42 +129,42 @@
 
     <ng-container matColumnDef="tipo_venta">
       <th mat-header-cell *matHeaderCellDef> Tipo de venta </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.tipo_venta}} </td>
     </ng-container>
 
     <ng-container matColumnDef="precio_venta">
       <th mat-header-cell *matHeaderCellDef> Precio de venta </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.precio_venta}} </td>
     </ng-container>
 
     <ng-container matColumnDef="separacion">
       <th mat-header-cell *matHeaderCellDef> Separación </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.separacion}} </td>
     </ng-container>
 
     <ng-container matColumnDef="cuota_inicial">
       <th mat-header-cell *matHeaderCellDef> Cuota inicial </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.cuota_inicial}} </td>
     </ng-container>
 
     <ng-container matColumnDef="fecha_ci">
       <th mat-header-cell *matHeaderCellDef> Fecha de pago de cuota inicial </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.fecha_ci?.seconds * 1000 | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="eq_part_pago">
       <th mat-header-cell *matHeaderCellDef> Equipo parte de pago </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.eq_part_pago}} </td>
     </ng-container>
 
     <ng-container matColumnDef="monto_finan">
       <th mat-header-cell *matHeaderCellDef> Monto a financiar </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.monto_finan}} </td>
     </ng-container>
 
     <ng-container matColumnDef="fecha_insta">
       <th mat-header-cell *matHeaderCellDef> Fecha de instalación </th>
-      <td mat-cell *matCellDef="let cliente"> - </td>
+      <td mat-cell *matCellDef="let cliente"> {{ cliente.fecha_insta?.seconds * 1000 | date:'dd/MM/yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="acciones">
@@ -174,7 +174,7 @@
           <i class="fa fa-search"></i></a>
         <a class="pointer" style="color:#666bb6; padding-right: 6px;" matTooltip="Editar usuario">
           <i class="fa fa-edit"></i></a>
-        <a class="pointer" style="color:#e15639" matTooltip="Eliminar usuario">
+        <a class="pointer" style="color:#e15639" matTooltip="Eliminar usuario" (click)="eliminarCliente(cliente)">
           <i class="fa fa-trash"></i></a></td>
     </ng-container>
 
