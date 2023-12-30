@@ -5,13 +5,14 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MatDatepicker} from '@angular/material/datepicker';
 import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
+import Swal from 'sweetalert2';
 
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {default as _rollupMoment, Moment} from 'moment';
-import 'moment/locale/es';
 
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { Router } from '@angular/router';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -85,7 +86,7 @@ export class ClientesComponent {
   dateWithDay = new FormControl(moment());
   dateForInstallation = new FormControl(moment());
 
-  constructor(private _formBuilder: FormBuilder, private clientService: ClientsService) {
+  constructor(private _formBuilder: FormBuilder, private clientService: ClientsService, private router: Router) {
     this.formulario = this._formBuilder.group({
       mes_venta: [null],
       empresa: [null],
@@ -126,6 +127,20 @@ export class ClientesComponent {
     // Actualizar los valores en el formulario
     this.formulario.patchValue({ fecha_ci, fecha_insta });
 
+    Swal.fire({
+      title: '¡Registro exitoso!',
+      text: 'Tu registro ha sido completado con éxito',
+      icon: 'success',
+      timer: 15000, // Muestra la alerta durante 3 segundos
+      showConfirmButton: true,
+      confirmButtonText: 'OK'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Redirigir después de hacer clic en el botón OK
+        this.router.navigate(['/home']);
+      }
+    });
+
     try {
       const response = await this.clientService.addClient(this.formulario.value);
       console.log('Respuesta de Firestore:', response);
@@ -151,5 +166,6 @@ export class ClientesComponent {
     }
     return null; // Válido
   }
+
 
 }

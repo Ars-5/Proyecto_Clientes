@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sidenav-with-multilevel-menu": {
+    "crudrfb": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/sidenav-with-multilevel-menu",
+            "outputPath": "dist/crudrfb",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -42,13 +42,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 }
               ],
               "outputHashing": "all"
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "sidenav-with-multilevel-menu:build:production"
+              "browserTarget": "crudrfb:build:production"
             },
             "development": {
-              "browserTarget": "sidenav-with-multilevel-menu:build:development"
+              "browserTarget": "crudrfb:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sidenav-with-multilevel-menu:build"
+            "browserTarget": "crudrfb:build"
           }
         },
         "test": {

@@ -11,7 +11,7 @@ interface SideNavToggle {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'sidenav-with-multilevel-menu';
+  title = 'crudrfb';
 
   isSideNavCollapsed = false;
   screenWidth = 0;
