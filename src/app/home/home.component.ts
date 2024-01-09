@@ -151,30 +151,23 @@ private obtenerDepartamentos(): string[] {
 
 
   mostrarDetalles(clienteId: string) {
+    console.log('ID del cliente en el componente antes de llamar a getClientById:', clienteId);
+
     // Obtener detalles del cliente por ID
     this.clientService.getClientById(clienteId)
       .then((cliente) => {
         if (cliente !== null) {
-          console.log('Detalles del cliente:', cliente);
+          console.log('Detalles del cliente en el componente:', cliente);
         } else {
-          console.log('Cliente no encontrado');
+          console.log('Cliente no encontrado en el componente');
         }
       })
       .catch((error) => {
         console.error('Error al obtener detalles del cliente:', error);
       });
-
-    // Obtener todos los IDs de los documentos
-    this.clientService.getAllClientIds().then(ids => {
-      console.log('Document IDs:', ids);
-
-      // Puedes iterar sobre los IDs si es necesario
-      for (const id of ids) {
-        // Hacer algo con cada ID, si es necesario
-        console.log('Document ID:', id);
-      }
-    });
   }
+
+
 
 
 

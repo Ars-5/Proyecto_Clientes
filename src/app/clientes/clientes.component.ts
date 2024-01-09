@@ -147,7 +147,7 @@ export class ClientesComponent {
     } catch (error) {
       console.error('Error al registrar en Firestore:', error);
     }
-  }
+  } 
 
 
 

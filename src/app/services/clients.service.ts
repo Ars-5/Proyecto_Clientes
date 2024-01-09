@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentSnapshot, AngularFirestoreCollection, DocumentData, DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentSnapshot, AngularFirestoreCollection, DocumentData, DocumentReference, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import Client from 'src/interfaces/clients.interface';
 import 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { getFirestore, collection, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDoc, query, getDocs } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
-
+import { where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -28,25 +28,29 @@ export class ClientsService {
   }
 
 
-  // pendiente correciones, por falta de tiempo
-  async getClientById(id: string): Promise<any> {
-    try {
-      const db = getFirestore();
-      const docRef = doc(db, 'clients', id);
+  // getClients2(): Observable<any>{
+  //   return this.afs.collection('clients').snapshotChanges();
 
-      const docSnapshot = await getDoc(docRef);
+  // }
 
-      if (docSnapshot.exists()) {
-        // Retorna los datos del documento
-        return docSnapshot.data();
+
+  getClientById(clienteId: string): Promise<any> {
+    const clientDocRef: AngularFirestoreDocument<any> = this.afs.collection('clients').doc(clienteId);
+
+    return clientDocRef.get().toPromise().then((docSnapshot) => {
+      if (docSnapshot && docSnapshot.exists) {
+        const data = docSnapshot.data()?.data; // Acceder a la propiedad 'data'
+        const id = docSnapshot.id;
+
+        console.log('Datos del cliente en el servicio:', data);
+        console.log('ID del cliente en el servicio:', id);
+
+        return { id, ...data };
       } else {
-        console.error(`Error: No existe el cliente con el ID ${id}.`);
+        console.log('Cliente no encontrado en el servicio');
         return null;
       }
-    } catch (error) {
-      console.error(`Error al obtener el cliente con ID ${id}:`, error);
-      return null;
-    }
+    });
   }
 
   async getAllClientIds(): Promise<string[]> {
@@ -77,12 +81,13 @@ export class ClientsService {
     return clientDocRef.delete();
   }
 
-  // pendiente correciones, por falta de tiempo
+
   deleteClientv2(client: Client) {
     return this.afs.collection("clients")
     .doc(client.id)
     .delete();
   }
+
 
 
   updateClient(client: Client, id: string): Promise<void> {
