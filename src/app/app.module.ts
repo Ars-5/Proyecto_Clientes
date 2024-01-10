@@ -60,6 +60,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { EditclientComponent } from './editclient/editclient.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +76,7 @@ import { ClientesComponent } from './clientes/clientes.component';
     NewclientComponent,
     HomeComponent,
     ClientesComponent,
+    EditclientComponent,
   ],
   imports: [
     BrowserModule,

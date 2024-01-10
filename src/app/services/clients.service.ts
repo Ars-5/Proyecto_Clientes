@@ -129,4 +129,13 @@ export class ClientsService {
 
 
 
+  // getCliente(id: string): Observable<any> {
+  //   return this.afs.collection('clientes').doc(id).valueChanges();
+  // }
+
+  updateCliente(id: string, data: any): Promise<void> {
+    return this.afs.collection('clientes').doc(id).update(data);
+  }
+
+
 }

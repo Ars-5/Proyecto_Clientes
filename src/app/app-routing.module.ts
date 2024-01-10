@@ -9,6 +9,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { HomeComponent } from './home/home.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { LoginComponent } from './login/login.component';
+import { EditclientComponent } from './editclient/editclient.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'statistics', component: StatisticsComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'editclient', component: EditclientComponent},
   {path: 'adclient', component: ClientesComponent},
   {
     path: 'coupens',
