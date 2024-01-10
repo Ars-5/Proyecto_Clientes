@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentSnapshot, AngularFirestoreCollection, DocumentData, DocumentReference, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentSnapshot, AngularFirestoreCollection, DocumentData, DocumentReference, AngularFirestoreDocument, QuerySnapshot } from '@angular/fire/compat/firestore';
 import Client from 'src/interfaces/clients.interface';
 import 'rxjs/operators';
 import { map } from 'rxjs/operators';
@@ -19,6 +19,17 @@ export class ClientsService {
     this.clientsCollection = afs.collection<Client>('clients');
   }
 
+  generateUniqueId(): string {
+    return this.afs.createId();
+  }
+
+  // Agregar un documento con un ID personalizado
+  addClientWithCustomId(customId: string, data: any): Promise<void> {
+    const clientDocRef = this.afs.collection('clients').doc(customId);
+    return clientDocRef.set(data);
+  }
+
+
   addClient(client: Client): Promise<DocumentReference<Client>> {
     return this.clientsCollection.add(client);
   }
@@ -26,12 +37,6 @@ export class ClientsService {
   getClients() {
     return this.clientsCollection.valueChanges();
   }
-
-
-  // getClients2(): Observable<any>{
-  //   return this.afs.collection('clients').snapshotChanges();
-
-  // }
 
 
   getClientById(clienteId: string): Promise<any> {

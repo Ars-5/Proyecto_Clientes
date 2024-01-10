@@ -124,8 +124,11 @@ export class ClientesComponent {
     // Convertir el objeto Moment a una fecha de JavaScript para fecha_insta
     const fecha_insta = this.formulario.value.fecha_insta ? this.formulario.value.fecha_insta.toDate() : null;
 
-    // Actualizar los valores en el formulario
-    this.formulario.patchValue({ fecha_ci, fecha_insta });
+    // Generar un ID único
+    const uniqueId = this.clientService.generateUniqueId();
+
+    // Actualizar los valores en el formulario y agregar el ID único
+    const formDataWithId = { id: uniqueId, ...this.formulario.value, fecha_ci, fecha_insta };
 
     Swal.fire({
       title: '¡Registro exitoso!',
@@ -142,12 +145,15 @@ export class ClientesComponent {
     });
 
     try {
-      const response = await this.clientService.addClient(this.formulario.value);
+      // Agregar el cliente con el ID único
+      const response = await this.clientService.addClientWithCustomId(uniqueId, formDataWithId);
       console.log('Respuesta de Firestore:', response);
     } catch (error) {
       console.error('Error al registrar en Firestore:', error);
     }
-  } 
+    console.log('ID del cliente:', formDataWithId.id);
+  }
+
 
 
 

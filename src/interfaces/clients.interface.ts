@@ -1,5 +1,5 @@
 export default interface Client {
-  id: string;
+  id?: string;
   mes_venta: string;
   empresa: string;
   fuv: string;
