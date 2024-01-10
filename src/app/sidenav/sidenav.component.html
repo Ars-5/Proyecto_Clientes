@@ -1,7 +1,7 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
     <div class="logo-container">
         <button class="logo" (click)="toggleCollapse()">A</button>
-        <div class="logo-text" @fadeInOut *ngIf="collapsed">Proy_v1</div>
+        <div class="logo-text" @fadeInOut *ngIf="collapsed">Proy</div>
         <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
             <i class="fal fa-times close-icon"></i>
         </button>
@@ -41,8 +41,13 @@
                         [multiple]="multiple"
                         [expanded]="data.expanded"
                     ></app-sublevel-menu>
+                    <a class="sidenav-nav-link" (click)="logout()">
+                      <i class="sidenav-link-icon fal fa-sign-out"></i>
+                      <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">Cerrar sesión</span>
+                    </a>
                 </div>
             </li>
         </ul>
     </div>
+
 </div>

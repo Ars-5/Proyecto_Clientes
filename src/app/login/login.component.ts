@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,  EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavigationExtras } from '@angular/router';
 
@@ -8,17 +8,19 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  @Output() loginSuccess = new EventEmitter<boolean>();
+  login: any;
   constructor(private router: Router) { }
 
-  onLoginSuccess() {
-    // Aquí va el código para verificar las credenciales del usuario
 
-    // Si las credenciales son correctas, navega a AppComponent
-    let navigationExtras: NavigationExtras = {
-       skipLocationChange: true,
-       replaceUrl: true
-    };
 
-    this.router.navigate(['/'], navigationExtras);
-   }
+   loginUser() {
+    // ... Lógica de inicio de sesión exitosa ...
+
+    // Emitir el evento de éxito de inicio de sesión
+    this.router.navigate(['/home']);
+    this.loginSuccess.emit(true);
+  }
+
+
 }

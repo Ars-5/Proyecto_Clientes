@@ -5,28 +5,10 @@ import { Sort, MatSort } from '@angular/material/sort';
 import { ClientsService } from '../services/clients.service';
 import Client from 'src/interfaces/clients.interface';
 
-// pruebas
-// pruebas
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean;
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
-// pruebas
-// pruebas
 
 @Component({
   selector: 'app-home',
@@ -34,10 +16,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements AfterViewInit, OnInit  {
-
-  displayedColumns2: string[] = ['demo-position', 'demo-name'];
-  dataSource2 = ELEMENT_DATA;
-
   clientesvf!: Client[];
   disableSelect = false;
   departamentoFiltrado: string = '';
@@ -50,6 +28,18 @@ export class HomeComponent implements AfterViewInit, OnInit  {
   displayedColumns: string[] = ['id', 'mes_venta', 'empresa', 'fuv', 'mes_venta2', 'ejecutivo', 'fac_bol', 'ruc_dni', 'r_social', 'cliente',
   'email', 'telefono', 'direccion',  'department', 'equipo', 'dongle', 'tipo_venta', 'precio_venta', 'separacion', 'cuota_inicial', 'fecha_ci', 'eq_part_pago', 'monto_finan', 'fecha_insta', 'acciones'];
   dataSource = new MatTableDataSource<Client>();
+
+
+  
+  isSideNavCollapsed = false;
+  screenWidth = 0;
+
+  onToggleSideNav(data: SideNavToggle): void {
+    this.screenWidth = data.screenWidth;
+    this.isSideNavCollapsed = data.collapsed;
+  }
+
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -223,6 +213,17 @@ private obtenerDepartamentos(): string[] {
     }
     console.log(this.clientesvf)
   }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

@@ -28,7 +28,7 @@ interface SideNavToggle {
   ]
 })
 export class SidenavComponent implements OnInit {
-
+  @Output() logoutClicked = new EventEmitter<void>();
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
@@ -77,5 +77,14 @@ export class SidenavComponent implements OnInit {
         }
       }
     }
+  }
+
+  logout() {
+    // Puedes agregar lógica de cierre de sesión si es necesario
+
+    // Emitir evento de clic de cierre de sesión
+    this.router.navigate(['/login']);
+    this.logoutClicked.emit();
+    window.location.reload();
   }
 }

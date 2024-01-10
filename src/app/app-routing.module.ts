@@ -12,7 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { EditclientComponent } from './editclient/editclient.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'home', component: HomeComponent},
   {path: 'statistics', component: StatisticsComponent},
