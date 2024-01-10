@@ -35,7 +35,17 @@ export class HomeComponent implements AfterViewInit, OnInit  {
     this.dataSource = new MatTableDataSource<Client>(this.originalData);
   }
 
+  formatFechaCi(cliente: any): string {
+    return cliente.fecha_ci?.seconds
+      ? new Date(cliente.fecha_ci.seconds * 1000).toLocaleDateString('es-ES')
+      : 'N/A';
+  }
 
+  formatFechaInsta(cliente: any): string {
+    return cliente.fecha_insta?.seconds
+      ? new Date(cliente.fecha_insta.seconds * 1000).toLocaleDateString('es-ES')
+      : 'N/A';
+  }
 
   ngOnInit(): void {
     this.clientService.getClients()

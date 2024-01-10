@@ -148,8 +148,8 @@
     </ng-container>
 
     <ng-container matColumnDef="fecha_ci">
-      <th mat-header-cell *matHeaderCellDef> Fecha de pago de cuota inicial </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.fecha_ci?.seconds * 1000 | date:'dd/MM/yyyy'}} </td>
+      <th mat-header-cell *matHeaderCellDef>Fecha de pago de cuota inicial</th>
+      <td mat-cell *matCellDef="let cliente">{{ formatFechaCi(cliente) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="eq_part_pago">
@@ -163,8 +163,8 @@
     </ng-container>
 
     <ng-container matColumnDef="fecha_insta">
-      <th mat-header-cell *matHeaderCellDef> Fecha de instalación </th>
-      <td mat-cell *matCellDef="let cliente"> {{ cliente.fecha_insta?.seconds * 1000 | date:'dd/MM/yyyy'}} </td>
+      <th mat-header-cell *matHeaderCellDef>Fecha de instalación</th>
+      <td mat-cell *matCellDef="let cliente">{{ formatFechaInsta(cliente) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="acciones">

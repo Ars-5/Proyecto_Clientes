@@ -53,7 +53,7 @@ export const navbarData: INavbarData[] = [
         ]
     },
     {
-    routeLink: '/login',
+    routeLink: 'login',
     icon: 'fal fa-sign-out',
     label: 'Cerrar sesion',
     }
