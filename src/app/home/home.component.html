@@ -1,7 +1,8 @@
+<div class="main-container">
+  <app-sidenav></app-sidenav>
 
-
+<div class="container">
 <h4>Seleccione los filtros:</h4>
-
 
 <mat-expansion-panel hideToggle class="card" style="margin-bottom: 30px;">
   <mat-expansion-panel-header>
@@ -36,7 +37,7 @@
 <mat-divider></mat-divider>
 
 
-<div class="mat-elevation-z8" >
+<div class="mat-elevation-z0" >
   <div>
     <div class="rigth" >
       <button class="fa fa-plus" mat-mini-fab matTooltip="Agregar usuario" color="primary" aria-label="Example mini fab with a heart icon" routerLink="/adclient">
@@ -56,7 +57,7 @@
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header="id"> Id </th>
-      <td mat-cell *matCellDef="let cliente"> </td>
+      <td mat-cell *matCellDef="let cliente"> {{cliente.id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="mes_venta">
@@ -178,11 +179,17 @@
       <th mat-header-cell *matHeaderCellDef class="center-text">Acciones</th>
       <td mat-cell *matCellDef="let cliente">
         <a class="pointer" style="color:#36385a; padding-right: 6px;" matTooltip="Detalles de usuario" (click)="mostrarDetalles(cliente.id)">
-          <i class="fa fa-search"></i></a>
-        <a class="pointer" style="color:#666bb6; padding-right: 6px;" matTooltip="Editar usuario">
-          <i class="fa fa-edit"></i></a>
-        <a class="pointer" style="color:#e15639" matTooltip="Eliminar usuario" (click)="eliminarCliente(cliente)">
-          <i class="fa fa-trash"></i></a></td>
+          <i class="fa fa-search"></i>
+        </a>
+
+        <a class="pointer" style="color:#666bb6; padding-right: 6px;" matTooltip="Editar usuario" (click)="editarUsuario(cliente.id)">
+          <i class="fa fa-edit"></i>
+        </a>
+
+        <a class="pointer" style="color:#e15639" matTooltip="Eliminar usuario" (click)="eliminarCliente(cliente.id)">
+          <i class="fa fa-trash"></i>
+        </a>
+        </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -192,4 +199,8 @@
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
   </mat-paginator>
 </div>
+<br>
+<mat-divider></mat-divider>
 
+</div>
+</div>

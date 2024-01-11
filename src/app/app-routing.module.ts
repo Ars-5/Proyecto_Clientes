@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'statistics', component: StatisticsComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'editclient', component: EditclientComponent},
+  {path: 'edit-client/:id', component: EditclientComponent},
   {path: 'adclient', component: ClientesComponent},
   {
     path: 'coupens',

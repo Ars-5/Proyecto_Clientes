@@ -1,31 +1,167 @@
 import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
+import {ClientsService} from '../services/clients.service';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepicker} from '@angular/material/datepicker';
+import {FormControl, FormGroupDirective, NgForm, Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+import Swal from 'sweetalert2';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+import * as _moment from 'moment';
+// tslint:disable-next-line:no-duplicate-imports
+import {default as _rollupMoment, Moment} from 'moment';
+
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
+import { ActivatedRoute, Router } from '@angular/router';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+
+const moment = _rollupMoment || _moment;
+moment.locale('es');
+
+
+
+export const MY_FORMATS_WITH_DAY = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-editclient',
   templateUrl: './editclient.component.html',
-  styleUrls: ['./editclient.component.scss']
+  styleUrls: ['./editclient.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS, ],
+    },
+    { provide: MAT_DATE_FORMATS,
+      useValue: MY_FORMATS_WITH_DAY },
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {showError: true},
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }
+  ],
 })
 export class EditclientComponent {
-  displayedColumns: string[] = ['demo-position', 'demo-name', 'demo-weight', 'demo-symbol'];
-  dataSource = ELEMENT_DATA;
+  meses = [
+    { nombre: 'Enero', valor: 'ENERO' },
+    { nombre: 'Febrero', valor: 'FEBRERO' },
+    { nombre: 'Marzo', valor: 'MARZO' },
+    { nombre: 'Abril', valor: 'ABRIL' },
+    { nombre: 'Mayo', valor: 'MAYO' },
+    { nombre: 'Junio', valor: 'JUNIO' },
+    { nombre: 'Julio', valor: 'JULIO' },
+    { nombre: 'Agosto', valor: 'AGOSTO' },
+    { nombre: 'Septiembre', valor: 'SEPTIEMBRE' },
+    { nombre: 'Octubre', valor: 'OCTUBRE' },
+    { nombre: 'Noviembre', valor: 'NOVIEMBRE' },
+    { nombre: 'Diciembre', valor: 'DICIEMBRE' }
+  ];
+  formulario!: FormGroup;
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  matcher = new MyErrorStateMatcher();
+  date = new FormControl(moment());
+  dateWithDay = new FormControl(moment());
+  dateForInstallation = new FormControl(moment());
+  clienteId!: string;
+
+  constructor(private _formBuilder: FormBuilder, private clientService: ClientsService, private router: Router, private route: ActivatedRoute,) {
+    this.formulario = this._formBuilder.group({
+      mes_venta: [null],
+      empresa: [null],
+      fuv: [null],
+      mes_venta2: [null],
+      ejecutivo: [null],
+      fac_bol: [null],
+      ruc_dni: [null],
+      r_social: [null],
+      cliente: [null],
+      email: [null, [Validators.email]],
+      telefono: [null],
+      direccion: [null],
+      department: [null],
+      equipo: [null],
+      dongle: [null],
+      tipo_venta: [null],
+      precio_venta: [null, [Validators.required, this.formatoMonedaValidator]],
+      separacion: [null, [this.formatoMonedaValidator]],
+      cuota_inicial: [null, [this.formatoMonedaValidator]],
+      fecha_ci: [''],
+      eq_part_pago: [null],
+      monto_finan: [null, [this.formatoMonedaValidator]],
+      fecha_insta: [''],
+      tipo_moneda: ['', Validators.required], // Nuevo control para la selección de moneda
+    });
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.clienteId = params['id'];
+      this.cargarDatosCliente();
+    });
+  }
+
+  async cargarDatosCliente() {
+    try {
+      const cliente = await this.clientService.getClient(this.clienteId);
+      if (cliente) {
+        this.formulario.patchValue(cliente);
+      } else {
+        console.error('Cliente no encontrado en el servicio');
+      }
+    } catch (error) {
+      console.error('Error al cargar los datos del cliente:', error);
+    }
+  }
+
+  async actualizarCliente() {
+    const clienteId = 'ID_DEL_CLIENTE';
+    const datosActualizados = this.formulario.value;
+    try {
+      await this.clientService.updateClient(clienteId, datosActualizados);
+      Swal.fire('Éxito', 'El cliente ha sido actualizado correctamente', 'success');
+      this.router.navigate(['/home']);
+    } catch (error) {
+      console.error('Error al actualizar el cliente:', error);
+      Swal.fire('Error', 'Hubo un error al actualizar el cliente', 'error');
+    }
+  }
+
+  setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = (this.date.value || moment()).clone();
+    ctrlValue.date(normalizedMonthAndYear.date());
+    ctrlValue.month(normalizedMonthAndYear.month());
+    ctrlValue.year(normalizedMonthAndYear.year());
+    this.date.setValue(ctrlValue);
+  }
+
+  formatoMonedaValidator(control: AbstractControl): { [key: string]: any } | null {
+    const valor = control.value;
+    if (valor && isNaN(valor)) {
+      return { 'formatoMoneda': true }; // Error si no es un número
+    }
+    return null; // Válido
+  }
 }

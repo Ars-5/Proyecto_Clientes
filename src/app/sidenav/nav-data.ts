@@ -2,12 +2,12 @@ import { INavbarData } from "./helper";
 
 export const navbarData: INavbarData[] = [
     {
-        routeLink: 'home',
+        routeLink: '/home',
         icon: 'fal fa-home',
         label: 'Dashboard'
     },
     {
-        routeLink: 'statistics',
+        routeLink: '/statistics',
         icon: 'fal fa-chart-bar',
         label: 'Statistics'
     },
@@ -27,17 +27,17 @@ export const navbarData: INavbarData[] = [
     //     ]
     // },
     {
-        routeLink: 'paginas',
+        routeLink: '/paginas',
         icon: 'fal fa-file',
         label: 'Pages'
     },
     {
-        routeLink: 'media',
+        routeLink: '/media',
         icon: 'fal fa-camera',
         label: 'Media'
     },
     {
-        routeLink: 'Ajustes',
+        routeLink: '/Ajustes',
         icon: 'fal fa-cog',
         label: 'Ajustes',
         expanded: true,
@@ -51,5 +51,10 @@ export const navbarData: INavbarData[] = [
                 label: 'Configuración'
             }
         ]
-    }
+    },
+    {
+        routeLink: '/login',
+        icon: 'fal fa-sign-out',
+        label: 'Logout'
+    },
 ];

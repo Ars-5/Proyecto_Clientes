@@ -1,13 +1,1 @@
-<!-- Mostrar el formulario de login si showLogin es true -->
-<div *ngIf="showLogin" class="login-overlay">
-  <app-login (loginSuccess)="onLoginSuccess($event)"></app-login>
-</div>
-
-<!-- Mostrar el cuerpo de la aplicación si showLogin es false -->
-<div *ngIf="!showLogin">
-  <app-sidenav (onToggleSideNav)="onToggleSideNav($event)" (logoutClicked)="onLogoutClicked()"></app-sidenav>
-  <app-body
-      [collapsed]="isSideNavCollapsed"
-      [screenWidth]="screenWidth"
-  ></app-body>
-</div>
+<router-outlet></router-outlet>

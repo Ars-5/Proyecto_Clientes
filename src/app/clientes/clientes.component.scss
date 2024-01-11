@@ -14,3 +14,24 @@ mat-grid-list {
 }
 
 
+
+.container {
+  padding: 20px;
+  margin-top: 35px;
+  width: calc(100% - 200px); /* Resta el ancho del navbar lateral */
+  position: relative;
+  top: 0;
+}
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+
+.main-container {
+  width: 100%;
+  overflow-y: hidden;
+}

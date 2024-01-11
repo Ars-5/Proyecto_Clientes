@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Sort, MatSort } from '@angular/material/sort';
 import { ClientsService } from '../services/clients.service';
 import Client from 'src/interfaces/clients.interface';
+import { Router } from '@angular/router';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -30,7 +31,7 @@ export class HomeComponent implements AfterViewInit, OnInit  {
   dataSource = new MatTableDataSource<Client>();
 
 
-  
+
   isSideNavCollapsed = false;
   screenWidth = 0;
 
@@ -44,7 +45,7 @@ export class HomeComponent implements AfterViewInit, OnInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private cdr: ChangeDetectorRef, private clientService: ClientsService) {
+  constructor(private cdr: ChangeDetectorRef, private clientService: ClientsService, private router: Router) {
     this.sortedData = [];
     this.originalData = [];
     this.dataSource = new MatTableDataSource<Client>(this.originalData);
@@ -176,9 +177,6 @@ private obtenerDepartamentos(): string[] {
 
 
   mostrarDetalles(clienteId: string) {
-    console.log('ID del cliente en el componente antes de llamar a getClientById:', clienteId);
-
-    // Obtener detalles del cliente por ID
     this.clientService.getClientById(clienteId)
       .then((cliente) => {
         if (cliente !== null) {
@@ -216,12 +214,9 @@ private obtenerDepartamentos(): string[] {
 
 
 
-
-
-
-
-
-
+  editarUsuario(clienteId: string) {
+    this.router.navigate(['/edit-client', clienteId]);
+  }
 
 
 }
