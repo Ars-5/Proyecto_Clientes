@@ -71,7 +71,6 @@ export class HomeComponent implements AfterViewInit, OnInit  {
           this.originalData = clientesvf.map((cliente) => {
             const id = cliente.id; // asumiendo que 'id' es la propiedad correcta que contiene el ID
             const data = cliente as unknown as Client; // asumiendo que los datos están directamente en el objeto
-
             return {
               ...data
             };
@@ -79,7 +78,6 @@ export class HomeComponent implements AfterViewInit, OnInit  {
 
           // Actualiza la data del MatTableDataSource con la nueva data que incluye los IDs
           this.dataSource.data = this.originalData.slice();
-
           // Actualiza la lista de departamentos
           this.departamentos = this.obtenerDepartamentos();
         } else {
@@ -175,7 +173,6 @@ private obtenerDepartamentos(): string[] {
     }
   }
 
-
   mostrarDetalles(clienteId: string) {
     this.clientService.getClientById(clienteId)
       .then((cliente) => {
@@ -190,15 +187,11 @@ private obtenerDepartamentos(): string[] {
       });
   }
 
-
-
-
-
-  eliminarCliente(cliente: Client) {
-    console.log('Cliente a eliminar:', cliente);
+  eliminarCliente(clienteId: string) {
+    console.log('Cliente a eliminar:', clienteId);
     const confirmacion = window.confirm('¿Estás seguro de que deseas eliminar este cliente?');
     if (confirmacion) {
-      this.clientService.deleteClient(cliente)
+      this.clientService.deleteClientv2({ id: clienteId } as Client)
         .then(() => {
           console.log('Cliente eliminado con éxito.');
           this.clientService.getClients().subscribe(clientesvf => {
@@ -209,18 +202,13 @@ private obtenerDepartamentos(): string[] {
           console.error('Error al eliminar cliente:', error);
         });
     }
-    console.log(this.clientesvf)
   }
-
-
 
   editarUsuario(clienteId: string) {
     this.router.navigate(['/edit-client', clienteId]);
   }
 
-
 }
-
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

@@ -66,6 +66,7 @@ export class ClientsService {
     });
   }
 
+
   deleteClient(client: Client): Promise<void> {
     const clientId = client.id;
     if (!clientId) {
@@ -76,10 +77,47 @@ export class ClientsService {
     return clientDocRef.delete();
   }
 
+
+  deleteClientv2(client: Client) {
+    return this.afs.collection("clients")
+    .doc(client.id)
+    .delete();
+  }
+
   updateClient(id: string, data: any): Promise<void> {
     const clientDocRef = this.afs.doc(`clients/${id}`);
-    return clientDocRef.update(data);
+
+    // Verificar la existencia del documento antes de intentar la actualización
+    return clientDocRef.get().toPromise().then((doc) => {
+      if (doc!.exists) {
+        return clientDocRef.update(data);
+      } else {
+        throw new Error("Documento no encontrado");
+      }
+    });
   }
+
+
+
+//extras:
+async getAllClientIds(): Promise<string[]> {
+  try {
+    const snapshot = await this.afs.collection('clients').get().toPromise();
+
+    if (snapshot) {
+      return snapshot.docs.map(doc => doc.id);
+    } else {
+      console.error('Error: No se pudo obtener el snapshot.');
+      return [];
+    }
+  } catch (error) {
+    console.error('Error al obtener los Document IDs:', error);
+    return [];
+  }
+}
+addClient(client: Client): Promise<DocumentReference<Client>> {
+  return this.clientsCollection.add(client);
+}
 
 
 }

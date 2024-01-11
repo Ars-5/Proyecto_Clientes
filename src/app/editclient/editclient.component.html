@@ -10,7 +10,7 @@
           <form [formGroup]="formulario" >
             <mat-grid-list cols="4" rowHeight="70px">
               <mat-grid-tile [colspan]="4" [rowspan]="1" >
-                <h4>Agregar nuevo usuario</h4>
+                <h4>Actualizar datos del usuario</h4>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field class="ancho">
@@ -128,7 +128,7 @@
                 </mat-form-field>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="2" [rowspan]="1" >
-                <h4>Agregar equipo de usuario</h4>
+                <h4>Actualizar el equipo del usuario</h4>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1" >
                 <mat-form-field class="ancho">
@@ -212,10 +212,19 @@
 
       <mat-step>
         <ng-template matStepLabel>Listo</ng-template>
-        <p>Todo listo para registrar el usuario.</p>
+        <p>Todo listo para actualizar el cliente.</p>
         <div>
-          <button mat-button (click)="actualizarCliente()">Registrar</button>
+          <button mat-button (click)="actualizarCliente()">Actualizar</button>
           <button mat-button (click)="stepper.reset()">Reiniciar</button>
+          <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
       </mat-step>
     </mat-horizontal-stepper>

@@ -25,8 +25,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 const moment = _rollupMoment || _moment;
 moment.locale('es');
 
-
-
 export const MY_FORMATS_WITH_DAY = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -87,6 +85,9 @@ export class EditclientComponent {
   dateForInstallation = new FormControl(moment());
   clienteId!: string;
 
+  loading = false;
+
+
   constructor(private _formBuilder: FormBuilder, private clientService: ClientsService, private router: Router, private route: ActivatedRoute,) {
     this.formulario = this._formBuilder.group({
       mes_venta: [null],
@@ -126,7 +127,9 @@ export class EditclientComponent {
   async cargarDatosCliente() {
     try {
       const cliente = await this.clientService.getClient(this.clienteId);
+
       if (cliente) {
+        // Asignar al formulario
         this.formulario.patchValue(cliente);
       } else {
         console.error('Cliente no encontrado en el servicio');
@@ -137,17 +140,28 @@ export class EditclientComponent {
   }
 
   async actualizarCliente() {
-    const clienteId = 'ID_DEL_CLIENTE';
+    this.loading = true;
+    console.log('Cliente ID:', this.clienteId);
     const datosActualizados = this.formulario.value;
+    this.loading = true;
+    // Convierte las fechas de Moment a Date
+    datosActualizados.fecha_ci = datosActualizados.fecha_ci.toDate();
+    datosActualizados.fecha_insta = datosActualizados.fecha_insta.toDate();
+    this.loading = true;
     try {
-      await this.clientService.updateClient(clienteId, datosActualizados);
+      await this.clientService.updateClient(this.clienteId, datosActualizados);
       Swal.fire('Éxito', 'El cliente ha sido actualizado correctamente', 'success');
       this.router.navigate(['/home']);
+      this.loading = false;
     } catch (error) {
       console.error('Error al actualizar el cliente:', error);
       Swal.fire('Error', 'Hubo un error al actualizar el cliente', 'error');
+      this.loading = false;
     }
   }
+
+
+
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const ctrlValue = (this.date.value || moment()).clone();
