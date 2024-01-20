@@ -30,34 +30,15 @@
                   </mat-select>
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Recepción FUV</mat-label>
-                  <input matInput formControlName="fuv">
-                </mat-form-field>
 
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Mes de venta</mat-label>
-                  <input matInput formControlName="mes_venta2">
-                </mat-form-field>
-              </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1" >
                 <mat-form-field class="ancho">
                   <mat-label>Ejecutivo</mat-label>
                   <input matInput formControlName="ejecutivo">
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>FACT / BOL </mat-label>
-                  <mat-select formControlName="fac_bol">
-                    <mat-option value="Factura">Factura</mat-option>
-                    <mat-option value="Boleta">Boleta</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
+
+
               <mat-grid-tile [colspan]="1" [rowspan]="1" >
                 <mat-form-field class="ancho">
                   <mat-label> RUC / DNI </mat-label>
@@ -92,7 +73,6 @@
               <mat-grid-tile [colspan]="1" [rowspan]="1" >
                 <mat-form-field class="ancho">
                   <mat-label>Telefono</mat-label>
-                  <span matPrefix>+51 &nbsp;</span>
                   <input type="tel" matInput placeholder="997-997-777" maxlength="9" formControlName="telefono">
                 </mat-form-field>
               </mat-grid-tile>
@@ -118,7 +98,7 @@
           <ng-template matStepLabel>Registro de equipo</ng-template>
           <form [formGroup]="formulario">
             <mat-grid-list cols="3" rowHeight="70px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
+              <!-- <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field>
                   <mat-label style="width: 20px;">Moneda</mat-label>
                   <mat-select formControlName="tipo_moneda">
@@ -126,8 +106,8 @@
                     <mat-option value="PEN">PEN</mat-option>
                   </mat-select>
                 </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="2" [rowspan]="1" >
+              </mat-grid-tile> -->
+              <mat-grid-tile [colspan]="3" [rowspan]="1" >
                 <h4>Agregar equipo de usuario</h4>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1" >
@@ -142,57 +122,7 @@
                   <input matInput formControlName="dongle">
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Tipo de venta</mat-label>
-                  <mat-select formControlName="tipo_venta">
-                    <mat-option value="CREDITO">Credito</mat-option>
-                    <mat-option value="DEBITO">Debito</mat-option>
-                    <mat-option value="CONTADO">Contado</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Precio de venta</mat-label>
-                  <input type="number" matInput formControlName="precio_venta">
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Separación</mat-label>
-                  <input type="number" matInput formControlName="separacion">
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Cuota inicial</mat-label>
-                  <input type="number" matInput formControlName="cuota_inicial">
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Fecha cuota inicial</mat-label>
-                  <input matInput [matDatepicker]="picker" formControlName="fecha_ci">
-                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
-                <mat-form-field class="ancho">
-                  <mat-label>Equipo parte pago</mat-label>
-                  <mat-select formControlName="eq_part_pago">
-                    <mat-option value="SI">SI</mat-option>
-                    <mat-option value="NO">NO</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" [rowspan]="1" >
-                <mat-form-field class="ancho">
-                  <mat-label>Monto a financiar</mat-label>
-                  <input type="number" matInput formControlName="monto_finan">
-                </mat-form-field>
-              </mat-grid-tile>
+
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-form-field class="ancho">
                   <mat-label>Fecha de instalación</mat-label>

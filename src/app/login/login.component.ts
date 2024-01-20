@@ -4,6 +4,7 @@ import { NavigationExtras } from '@angular/router';
 
 import { ElementRef, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
-  constructor(private router: Router, private el: ElementRef, private renderer: Renderer2) { }
-
+  formReg: FormGroup;
   hide = true;
 
+  constructor(private router: Router, private el: ElementRef, private renderer: Renderer2, ) {
+    this.formReg = new FormGroup({
+      email: new FormControl(),
+      password: new FormControl(),
+    })
+  }
 
+
+
+  loginUser(){
+    this.router.navigate(['/home']);
+  }
+
+  //animaciones
   register() {
     const x = this.el.nativeElement.querySelector('#login');
     const y = this.el.nativeElement.querySelector('#register');
@@ -38,11 +50,4 @@ export class LoginComponent {
     this.renderer.setStyle(y, 'left', leftY);
     this.renderer.setStyle(z, 'left', leftZ);
   }
-
-
-  loginUser(){
-    this.router.navigate(['/home']);
-  }
-
-
 }

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environment/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -61,6 +62,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { EditclientComponent } from './editclient/editclient.component';
+import { provideFirebaseApp } from '@angular/fire/app';
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,6 +123,7 @@ import { EditclientComponent } from './editclient/editclient.component';
     MatStepperModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    provideAuth(() => getAuth())
   ],
   providers: [],
   bootstrap: [AppComponent]

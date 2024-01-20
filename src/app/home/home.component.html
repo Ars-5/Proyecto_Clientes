@@ -70,25 +70,13 @@
       <td mat-cell *matCellDef="let cliente"> {{cliente.empresa}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="fuv">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Fecha recepción FUV </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.fuv}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="mes_venta2">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Mes de venta </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.mes_venta2}} </td>
-    </ng-container>
 
     <ng-container matColumnDef="ejecutivo">
       <th mat-header-cell *matHeaderCellDef class="center-text"> Ejecutivo </th>
       <td mat-cell *matCellDef="let cliente"> {{cliente.ejecutivo}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="fac_bol">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> FAC/BOL </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.fac_bol}} </td>
-    </ng-container>
 
     <ng-container matColumnDef="ruc_dni">
       <th mat-header-cell *matHeaderCellDef class="center-text"> RUC/DNI </th>
@@ -135,43 +123,8 @@
       <td mat-cell *matCellDef="let cliente"> {{cliente.dongle}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="tipo_venta">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Tipo de venta </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.tipo_venta}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="precio_venta">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Precio de venta </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.precio_venta}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="separacion">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Separación </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.separacion}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="cuota_inicial">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Cuota inicial </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.cuota_inicial}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="fecha_ci">
-      <th mat-header-cell *matHeaderCellDef class="center-text">Fecha de pago de cuota inicial</th>
-      <td mat-cell *matCellDef="let cliente">{{ formatFechaCi(cliente) }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="eq_part_pago">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Equipo parte de pago </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.eq_part_pago}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="monto_finan">
-      <th mat-header-cell *matHeaderCellDef class="center-text"> Monto a financiar </th>
-      <td mat-cell *matCellDef="let cliente"> {{cliente.monto_finan}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="fecha_insta">
-      <th mat-header-cell *matHeaderCellDef class="center-text">Fecha de instalación</th>
+    <ng-container matColumnDef="fecha_insta" >
+      <th mat-header-cell *matHeaderCellDef class="center-text" mat-sort-header mat-sort-header="fecha_insta">Fecha de instalación</th>
       <td mat-cell *matCellDef="let cliente">{{ formatFechaInsta(cliente) }}</td>
     </ng-container>
 

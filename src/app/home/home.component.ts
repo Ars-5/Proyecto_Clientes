@@ -26,8 +26,8 @@ export class HomeComponent implements AfterViewInit, OnInit  {
   sortedData: Client[] = [];
   originalData: Client[] = [];
   i!: number;
-  displayedColumns: string[] = ['id', 'mes_venta', 'empresa', 'fuv', 'mes_venta2', 'ejecutivo', 'fac_bol', 'ruc_dni', 'r_social', 'cliente',
-  'email', 'telefono', 'direccion',  'department', 'equipo', 'dongle', 'tipo_venta', 'precio_venta', 'separacion', 'cuota_inicial', 'fecha_ci', 'eq_part_pago', 'monto_finan', 'fecha_insta', 'acciones'];
+  displayedColumns: string[] = ['id', 'mes_venta', 'empresa',  'ejecutivo', 'ruc_dni', 'r_social', 'cliente',
+  'email', 'telefono', 'direccion',  'department', 'equipo', 'dongle', 'fecha_insta', 'acciones'];
   dataSource = new MatTableDataSource<Client>();
 
 
