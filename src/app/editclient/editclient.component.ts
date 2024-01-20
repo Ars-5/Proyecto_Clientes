@@ -92,10 +92,7 @@ export class EditclientComponent {
     this.formulario = this._formBuilder.group({
       mes_venta: [null],
       empresa: [null],
-      fuv: [null],
-      mes_venta2: [null],
       ejecutivo: [null],
-      fac_bol: [null],
       ruc_dni: [null],
       r_social: [null],
       cliente: [null],
@@ -105,13 +102,7 @@ export class EditclientComponent {
       department: [null],
       equipo: [null],
       dongle: [null],
-      tipo_venta: [null],
-      precio_venta: [null, [Validators.required, this.formatoMonedaValidator]],
-      separacion: [null, [this.formatoMonedaValidator]],
-      cuota_inicial: [null, [this.formatoMonedaValidator]],
-      fecha_ci: [''],
-      eq_part_pago: [null],
-      monto_finan: [null, [this.formatoMonedaValidator]],
+      fecha_ci: [null],
       fecha_insta: [''],
       tipo_moneda: ['', Validators.required], // Nuevo control para la selección de moneda
     });
@@ -145,7 +136,7 @@ export class EditclientComponent {
     const datosActualizados = this.formulario.value;
     this.loading = true;
     // Convierte las fechas de Moment a Date
-    datosActualizados.fecha_ci = datosActualizados.fecha_ci.toDate();
+    datosActualizados.fecha_ci = "null";
     datosActualizados.fecha_insta = datosActualizados.fecha_insta.toDate();
     this.loading = true;
     try {

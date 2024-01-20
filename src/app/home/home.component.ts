@@ -159,7 +159,6 @@ private obtenerDepartamentos(): string[] {
       (sortedData.mes_venta && sortedData.mes_venta.toLowerCase().includes(filtroLowerCase)) ||
       (sortedData.empresa && sortedData.empresa.toLowerCase().includes(filtroLowerCase)) ||
       (sortedData.ejecutivo && sortedData.ejecutivo.toLowerCase().includes(filtroLowerCase)) ||
-      (sortedData.fac_bol && sortedData.fac_bol.toLowerCase().includes(filtroLowerCase)) ||
       (sortedData.ruc_dni && sortedData.ruc_dni.toLowerCase().includes(filtroLowerCase)) ||
       (sortedData.r_social && sortedData.r_social.toLowerCase().includes(filtroLowerCase)) ||
       (sortedData.cliente && sortedData.cliente.toLowerCase().includes(filtroLowerCase)) ||
