@@ -6,7 +6,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environment/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-
+import 'firebase/auth';
+import { provideFirebaseApp, getApp } from '@angular/fire/app';
+import { initializeApp } from 'firebase/app';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,7 +65,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { EditclientComponent } from './editclient/editclient.component';
-import { provideFirebaseApp } from '@angular/fire/app';
+import { ToastrModule } from 'ngx-toastr';
+
+import { AuthGuard } from './services/auth.guard';
+import { DetallesClientComponent } from './detalles-client/detalles-client.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,8 +85,10 @@ import { provideFirebaseApp } from '@angular/fire/app';
     HomeComponent,
     ClientesComponent,
     EditclientComponent,
+    DetallesClientComponent,
   ],
   imports: [
+    ToastrModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -120,12 +128,14 @@ import { provideFirebaseApp } from '@angular/fire/app';
     MatGridListModule,
     MatCardModule,
     MatInputModule,
+    AngularFireStorageModule,
     MatStepperModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    provideAuth(() => getAuth())
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
   ],
-  providers: [],
+  providers: [AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

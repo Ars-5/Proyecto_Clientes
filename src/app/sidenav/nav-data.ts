@@ -1,4 +1,5 @@
 import { INavbarData } from "./helper";
+import { UserService } from '../services/user.service';
 
 export const navbarData: INavbarData[] = [
     {
@@ -58,3 +59,5 @@ export const navbarData: INavbarData[] = [
         label: 'Logout'
     },
 ];
+
+

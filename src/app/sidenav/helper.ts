@@ -4,6 +4,7 @@ export interface INavbarData {
     routeLink: string;
     icon?: string;
     label: string;
+    clickHandler?: () => void;
     expanded?: boolean;
     items?: INavbarData[];
 }

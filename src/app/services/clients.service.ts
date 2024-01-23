@@ -7,6 +7,10 @@ import { Observable } from 'rxjs';
 import { getFirestore, collection, getDoc, query, getDocs } from 'firebase/firestore';
 import { doc } from 'firebase/firestore';
 import { where } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { AngularFireStorage,  } from '@angular/fire/compat/storage';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +19,10 @@ export class ClientsService {
 
   private clientsCollection: AngularFirestoreCollection<Client>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
     this.clientsCollection = afs.collection<Client>('clients');
   }
+
 
   generateUniqueId(): string {
     return this.afs.createId();
@@ -96,7 +101,6 @@ export class ClientsService {
       }
     });
   }
-
 
 
 //extras:

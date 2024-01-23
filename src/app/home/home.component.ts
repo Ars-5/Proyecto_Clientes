@@ -177,6 +177,7 @@ private obtenerDepartamentos(): string[] {
       .then((cliente) => {
         if (cliente !== null) {
           console.log('Detalles del cliente en el componente:', cliente);
+          this.router.navigate(['/details', clienteId]);
         } else {
           console.log('Cliente no encontrado en el componente');
         }

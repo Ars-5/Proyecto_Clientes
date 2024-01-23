@@ -13,17 +13,18 @@
 
 
       <div class="social-icons">
-        <img src="assets/image/shared/gsvg.svg">
+        <img src="assets/image/shared/gsvg.svg" (click)="onClick()">
      </div>
-     <form id="login" class="input-group2">
-      <input type="email" class="input-field2" placeholder="Correo" required>
-      <input type="text" class="input-field2" placeholder="Contraseña" [type]="hide ? 'password' : 'text'"  required>
+     <form id="login" class="input-group2" [formGroup]="formLogin">
+      <input type="email" class="input-field2" placeholder="Correo" formControlName="email" required>
+      <input type="password" class="input-field2" placeholder="Contraseña" [type]="hide ? 'password' : 'text'"  formControlName="password" required>
       <button type="submit" class="submit-btn2" (click)="loginUser()">Login</button>
      </form>
-     <form id="register" class="input-group2">
-      <input type="email" class="input-field2" placeholder="Correo" required>
-      <input type="text" class="input-field2" placeholder="Contraseña" required>
-      <input type="text" class="input-field2" placeholder="Repetir contraseña" required>
+
+     <form id="register" class="input-group2" [formGroup]="formReg" (ngSubmit)="onSubmit()">
+      <input type="email" class="input-field2" placeholder="Correo"  formControlName="email" required>
+      <input type="password" class="input-field2" placeholder="Contraseña"  formControlName="password" [type]="hide ? 'password' : 'text'"  required>
+      <input type="password" class="input-field2" placeholder="Repetir contraseña" [type]="hide ? 'password' : 'text'"  required>
       <label for="terms-and-conditions">
         <input id="terms-and-conditions" type="checkbox" required name="terms-and-conditions"/> Acepto los <a href="">terminos y condiciones</a>
       </label>

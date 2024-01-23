@@ -1,0 +1,77 @@
+<div class="main-container">
+  <app-sidenav></app-sidenav>
+
+  <div class="container">
+    <h2>Detalles del Cliente</h2>
+    <mat-divider></mat-divider>
+    <br>
+    <p>Nombre del Cliente: {{ clienteNombre }}</p>
+    <p>Equipo del Cliente: {{ equipoCliente }}</p>
+    <mat-divider></mat-divider>
+    <br>
+    <mat-expansion-panel hideToggle class="card" style="margin-bottom: 30px;">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Mantenimientos
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button type="button" mat-raised-button (click)="fileInputArchivos.click()">Subir archivo</button>
+      <input hidden (change)="subirArchivo($event)" #fileInputArchivos type="file" id="file">
+      <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+
+      <div *ngFor="let archivo of archivos">
+        <a [href]="archivo.url" target="_blank">{{ archivo.name }}</a>
+
+        <button matTooltip="Descargar archivo" mat-icon-button color="primary" (click)="descargarArchivo(archivo.url, archivo.name)">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+        <button matTooltip="Eliminar archivo" mat-icon-button color="warn" (click)="eliminarArchivo(archivo.name)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider>
+    <mat-expansion-panel hideToggle class="card" style="margin-bottom: 30px;">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Extras
+        </mat-panel-title>
+        <mat-panel-description>
+          imagenes varias
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button type="button" mat-raised-button (click)="fileInputImagenes.click()">Subir Imagen</button>
+      <input hidden (change)="subirImagen($event)" #fileInputImagenes type="file" id="fileImagenes">
+      <div *ngIf="loadingImg" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div *ngIf="loadingImg" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div *ngIf="loadingImg" class="spinner-grow spinner-grow-sm" role="status" style="margin-left: 10px;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <br>
+      <br>
+      <div *ngFor="let image of images">
+        <img [src]="image.url" alt="Imagen del cliente" class="cliente-image">
+        <button matTooltip="Descargar imagen" mat-icon-button color="primary" (click)="descargarImagen(image.url, image.name)">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+        <button matTooltip="Eliminar imagen" mat-icon-button color="warn" (click)="eliminarImagen(image.name)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+    </mat-expansion-panel>
+
+  </div>
+</div>

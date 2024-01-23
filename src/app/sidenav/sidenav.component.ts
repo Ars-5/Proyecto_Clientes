@@ -3,6 +3,7 @@ import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/
 import { Router } from '@angular/router';
 import { fadeInOut, INavbarData } from './helper';
 import { navbarData } from './nav-data';
+import { UserService } from '../services/user.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -44,7 +45,7 @@ export class SidenavComponent implements OnInit {
     }
   }
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
@@ -60,10 +61,16 @@ export class SidenavComponent implements OnInit {
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
 
+  navbarData = navbarData;
+
   handleClick(item: INavbarData): void {
     this.shrinkItems(item);
     item.expanded = !item.expanded
   }
+
+
+
+
 
   getActiveClass(data: INavbarData): string {
     return this.router.url.includes(data.routeLink) ? 'active' : '';
@@ -80,11 +87,15 @@ export class SidenavComponent implements OnInit {
   }
 
   logout() {
-    // Puedes agregar lógica de cierre de sesión si es necesario
-
-    // Emitir evento de clic de cierre de sesión
-    this.router.navigate(['/login']);
-    this.logoutClicked.emit();
-    window.location.reload();
+    this.userService.logout()
+      .then(() => {
+        this.router.navigate(['/login']);
+        this.logoutClicked.emit();
+        window.location.reload();
+      })
+      .catch(error => console.log(error));
   }
+
+
+
 }
